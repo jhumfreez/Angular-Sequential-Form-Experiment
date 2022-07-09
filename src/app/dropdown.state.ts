@@ -27,30 +27,59 @@ export class FetchDropdowns {
 }
 
 export interface DropdownStateModel {
-  dropdownMap: Map<FieldType, DropdownItem[]>;
+  // Not storing a map based on style guide: https://www.ngxs.io/recipes/style-guide#flatten-deep-object-graphs
+  dropdownMap: {
+    [key in FieldType]: DropdownItem[];
+  };
 }
 @State<DropdownStateModel>({
   name: 'dropdownContent',
   defaults: {
-    dropdownMap: new Map<FieldType, DropdownItem[]>(),
+    dropdownMap: {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+    },
   },
 })
 @Injectable()
 export class DropdownState {
   constructor(private fakeHttpService: FakeHttpService) {}
 
+  // FIXME
   @Selector()
   static getDropdowns(fieldType: FieldType) {
     return createSelector([DropdownState], (state: DropdownStateModel) => {
-      return state.dropdownMap.get(fieldType) ?? [];
+      return state.dropdownMap[fieldType] ?? [];
     });
+  }
+
+  @Selector()
+  static getDropdownsA(state: DropdownStateModel) {
+    return state.dropdownMap[FieldType.OptionA] ?? [];
+  }
+
+  @Selector()
+  static getDropdownsB(state: DropdownStateModel) {
+    return state.dropdownMap[FieldType.OptionB] ?? [];
+  }
+
+  @Selector()
+  static getDropdownsC(state: DropdownStateModel) {
+    return state.dropdownMap[FieldType.OptionC] ?? [];
+  }
+
+  @Selector()
+  static getDropdownsD(state: DropdownStateModel) {
+    return state.dropdownMap[FieldType.OptionD] ?? [];
   }
 
   @Action(UpdateDropdowns)
   add(ctx: StateContext<DropdownStateModel>, action: UpdateDropdowns) {
     const map = ctx.getState().dropdownMap;
-    map.set(action.fieldType, action.dropdownItems);
-    ctx.setState({ dropdownMap: map });
+    map[action.fieldType] = action.dropdownItems;
+    ctx.patchState({ dropdownMap: map });
   }
 
   // Alternative fetch approach
@@ -58,8 +87,8 @@ export class DropdownState {
   fetch(ctx: StateContext<DropdownStateModel>, action: FetchDropdowns) {
     return this.fakeHttpService.getDropdowns().subscribe((response) => {
       const map = ctx.getState().dropdownMap;
-      map.set(action.fieldType, response);
-      ctx.setState({ dropdownMap: map });
+      map[action.fieldType] = response;
+      ctx.patchState({ dropdownMap: map });
     });
   }
 }

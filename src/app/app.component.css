@@ -9,3 +9,7 @@ label {
 select {
   min-width: 100px;
 }
+
+.label-invalid {
+  color: red;
+}

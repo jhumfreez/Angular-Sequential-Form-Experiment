@@ -1,31 +1,63 @@
-<form formGroupName="myForm">
+<form [formGroup]="myForm">
   <div class="form-row">
-    <label for="optionA">Option A</label>
-    <select formControlName="optionA" id="optionA">
+    <label
+      for="optionA"
+      [ngClass]="{
+        'label-invalid':
+          myForm.get('optionA').invalid && myForm.get('optionA').touched
+      }"
+      >Option A</label
+    >
+    <select formControlName="optionA" id="optionA" (change)="onSelectionA()">
+      <option [ngValue]="null"></option>
       <option *ngFor="let item of dropdownA$ | async">
         {{ item.text }}
       </option>
     </select>
   </div>
   <div class="form-row">
-    <label for="optionB">Option B</label>
-    <select formControlName="optionB" id="optionB">
+    <label
+      for="optionB"
+      [ngClass]="{
+        'label-invalid':
+          myForm.get('optionB').invalid && myForm.get('optionB').touched
+      }"
+      >Option B</label
+    >
+    <select formControlName="optionB" id="optionB" (change)="onSelectionB()">
+      <option [ngValue]="null"></option>
       <option *ngFor="let item of dropdownB$ | async">
         {{ item.text }}
       </option>
     </select>
   </div>
   <div class="form-row">
-    <label for="optionC">Option C</label>
-    <select formControlName="optionC" id="optionC">
+    <label
+      for="optionC"
+      [ngClass]="{
+        'label-invalid':
+          myForm.get('optionC').invalid && myForm.get('optionC').touched
+      }"
+      >Option C</label
+    >
+    <select formControlName="optionC" id="optionC" (change)="onSelectionC()">
+      <option [ngValue]="null"></option>
       <option *ngFor="let item of dropdownC$ | async">
         {{ item.text }}
       </option>
     </select>
   </div>
   <div class="form-row">
-    <label for="optionD">Option D</label>
+    <label
+      for="optionD"
+      [ngClass]="{
+        'label-invalid':
+          myForm.get('optionD').invalid && myForm.get('optionD').touched
+      }"
+      >Option D</label
+    >
     <select formControlName="optionD" id="optionD">
+      <option [ngValue]="null"></option>
       <option *ngFor="let item of dropdownD$ | async">
         {{ item.text }}
       </option>
