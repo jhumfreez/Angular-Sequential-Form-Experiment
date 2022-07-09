@@ -10,3 +10,10 @@ export const mockDropdownItems: DropdownItem[] = [
   { id: '4', text: 'option 4' },
   { id: '5', text: 'option 5' },
 ];
+
+export enum FieldType {
+  OptionA,
+  OptionB,
+  OptionC,
+  OptionD,
+}

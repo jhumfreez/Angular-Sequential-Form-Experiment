@@ -1,32 +1,65 @@
-import { State, Action, Selector } from '@ngxs/store';
-import { StateContext } from '@ngxs/store/src/public_api';
-import { DropdownItem } from './models';
+import { Injectable } from '@angular/core';
+import {
+  State,
+  Action,
+  Selector,
+  createSelector,
+  StateContext,
+} from '@ngxs/store';
+import { FakeHttpService } from './fake-http.service';
+import { DropdownItem, FieldType } from './models';
 
 export class UpdateDropdowns {
-  static readonly type = 'Update Dropdown Content';
+  static readonly type = '[Dropdown] Update Content';
   dropdownItems: DropdownItem[] = [];
-  constructor(dropdowns: DropdownItem[]) {
+  fieldType: FieldType;
+  constructor(dropdowns: DropdownItem[], fieldType: FieldType) {
     this.dropdownItems = dropdowns;
+    this.fieldType = fieldType;
   }
 }
+export class FetchDropdowns {
+  static readonly type = '[Dropdown] Fetch Content';
+  fieldType: FieldType;
+  constructor(fieldType: FieldType) {
+    this.fieldType = fieldType;
+  }
+}
+
 export interface DropdownStateModel {
-  dropdownContent: DropdownItem[];
+  dropdownMap: Map<FieldType, DropdownItem[]>;
 }
 @State<DropdownStateModel>({
   name: 'dropdownContent',
   defaults: {
-    dropdownContent: [],
+    dropdownMap: new Map<FieldType, DropdownItem[]>(),
   },
 })
+@Injectable()
 export class DropdownState {
+  constructor(private fakeHttpService: FakeHttpService) {}
 
   @Selector()
-  getDropdowns(state: DropdownStateModel){
-    return state.dropdownContent;
+  static getDropdowns(fieldType: FieldType) {
+    return createSelector([DropdownState], (state: DropdownStateModel) => {
+      return state.dropdownMap.get(fieldType) ?? [];
+    });
   }
 
   @Action(UpdateDropdowns)
   add(ctx: StateContext<DropdownStateModel>, action: UpdateDropdowns) {
-    ctx.setState({ dropdownContent: action.dropdownItems });
+    const map = ctx.getState().dropdownMap;
+    map.set(action.fieldType, action.dropdownItems);
+    ctx.setState({ dropdownMap: map });
+  }
+
+  // Alternative fetch approach
+  @Action(FetchDropdowns)
+  fetch(ctx: StateContext<DropdownStateModel>, action: FetchDropdowns) {
+    return this.fakeHttpService.getDropdowns().subscribe((response) => {
+      const map = ctx.getState().dropdownMap;
+      map.set(action.fieldType, response);
+      ctx.setState({ dropdownMap: map });
+    });
   }
 }

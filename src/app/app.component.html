@@ -1,0 +1,29 @@
+<form formGroupName="myForm">
+  <label for="optionA">Option A</label>
+  <select formControlName="optionA" id="optionA">
+    <option *ngFor="let item of dropdownA$ | async">
+      {{ item.text }}
+    </option>
+  </select>
+
+  <label for="optionB">Option B</label>
+  <select formControlName="optionB" id="optionB">
+    <option *ngFor="let item of dropdownB$ | async">
+      {{ item.text }}
+    </option>
+  </select>
+
+  <label for="optionC">Option C</label>
+  <select formControlName="optionC" id="optionC">
+    <option *ngFor="let item of dropdownC$ | async">
+      {{ item.text }}
+    </option>
+  </select>
+
+  <label for="optionD">Option D</label>
+  <select formControlName="optionD" id="optionD">
+    <option *ngFor="let item of dropdownD$ | async">
+      {{ item.text }}
+    </option>
+  </select>
+</form>
