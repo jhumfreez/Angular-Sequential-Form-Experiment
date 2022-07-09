@@ -3,7 +3,7 @@
 ## Description
 This repo is a workshop to find a decent pattern for the following form conditions and requirements:
 1. You have multiple dropdown fields.
-1. The options for the first field are provided by an API call, and this field initializes as enabled with no default selection/value.
+1. The options for the first field are provided by an API call, and this field initializes as disabled until response returns and defaults to an empty selection option.
 1. The rest are empty and disabled.
 1. Upon selecting an option from the first, an API call occurs that populates options for the second and enables it.
 1. This chain continues for the rest of the fields.
