@@ -33,7 +33,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/ngxs-repro-1rzmzp)
 
-###### Credits
+#### Credits
 Favicon: generated using the following graphics from Twitter Twemoji:
 - Graphics Title: 1f60a.svg
 - Graphics Author: Copyright 2020 Twitter, Inc and other contributors (https://github.com/twitter/twemoji)
