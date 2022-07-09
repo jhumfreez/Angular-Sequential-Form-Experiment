@@ -1,14 +1,15 @@
-import { Component } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Select, Store } from "@ngxs/store";
-import { Observable } from "rxjs";
-import { DropdownState, UpdateDropdowns } from "./dropdown.state";
-import { FakeHttpService } from "./fake-http.service";
-import { DropdownItem, FieldType } from "./models";
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { DropdownState, UpdateDropdowns } from './dropdown.state';
+import { FakeHttpService } from './fake-http.service';
+import { DropdownItem, FieldType } from './models';
 
 @Component({
-  selector: "my-app",
-  templateUrl: "./app.component.html",
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   @Select(DropdownState.getDropdowns(FieldType.OptionA))

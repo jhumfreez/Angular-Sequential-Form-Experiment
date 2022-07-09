@@ -1,0 +1,11 @@
+.form-row {
+  margin-bottom: 20px;
+}
+
+label {
+  padding-right: 20px;
+}
+
+select {
+  min-width: 100px;
+}
